@@ -121,6 +121,83 @@
 
 
     }
+    public class DeliveryCenter
+    {
+        private Shipment[] shipments;
+        private int count;
+        public int Capacity = 3;
+        public DeliveryCenter()
+        {
+            shipments = new Shipment[Capacity];
+            count = 0;
+        }
+        public Shipment this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Capacity)
+                    return null;
+                return shipments[index];
+            }
+            set
+            {
+                if (index < 0 || index >= Capacity)
+                    return;
+
+                shipments[index] = value;
+                count++;
+            }
+        }
+        public void PrintShipmentITrackableshipment()
+        {
+            foreach (Shipment s in shipments)
+            {
+                Console.WriteLine(s.GetTrackingStatus);
+            }
+        }
+        public void PrintInsuranceIInsurableshipment()
+        {
+            foreach (Shipment s in shipments)
+            {
+                Console.WriteLine(s.CalculateInsurance);
+            }
+        }
+        public Shipment this[string trackingCode]
+        {
+            get
+            {
+                for (int i = 0; i < Capacity; i++)
+                {
+                    if (shipments[i].code == trackingCode)
+                        return shipments[i];
+                }
+                return null;
+            }
+        }
+
+        public bool AddShipment(StandardShipment shipment)
+        {
+            for (int i = 0; i < Capacity; i++)
+            {
+
+                if (shipments[i] == null)
+                {
+                    shipments[i] = shipment;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public void printallshipments()
+        {
+            foreach (Shipment s in shipments)
+            {
+                s.PrintShipment();
+            }
+        }
+
+
+    }
     public class StandardShipment : Shipment, IInsurable, ITrackable
     {
         public StandardShipment(string trackingCode, string description, int weight, int deliveryFee, DeliveryAddress destination) : base(trackingCode, description, weight, deliveryFee, destination)
